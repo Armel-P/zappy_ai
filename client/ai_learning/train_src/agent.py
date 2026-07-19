@@ -191,7 +191,12 @@ class Agent:
         return False
 
     def get_resource(self, resource):
-        self.inventory[resource] += 1
+        if resource == "food":
+            self.eat()
+            # Most servers make the ai eat directly once pickup,
+            # so this is the way which will work the most
+        else:
+            self.inventory[resource] += 1
 
     def drop_resource(self, resource, tile):
         self.inventory[resource] -= 1

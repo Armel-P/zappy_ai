@@ -83,10 +83,9 @@ ACTIONS = {
     "DROP_MENDIANE":  16,
     "DROP_PHIRAS":    17,
     "DROP_THYSTAME":  18,
-    "EAT":            19,
-    "FORK":           20,
-    "BROADCAST_ADV":  21,
-    "BROADCAST_INV":  22,
+    "FORK":           19,
+    "BROADCAST_ADV":  20,
+    "BROADCAST_INV":  21,
 }
 
 MAX_VISION_TILES = 64 # lvl 7 so 7 rows (we stop once lvl 8 get so don't need to calculate it)

@@ -40,7 +40,6 @@ class ZappyEnv:
             ACTIONS["MOVE_FORWARD"]: self._move_forward,
             ACTIONS["TURN_LEFT"]: self._turn,
             ACTIONS["TURN_RIGHT"]: self._turn,
-            ACTIONS["EAT"]: self._eat,
             ACTIONS["FORK"]: self._fork,
             ACTIONS["BROADCAST_ADV"]: self._broadcast,
             ACTIONS["BROADCAST_INV"]: self._broadcast
@@ -85,8 +84,6 @@ class ZappyEnv:
 
         for i, resource in enumerate(RESOURCE_KEYS):
             mask[12 + i] = agent.inventory[resource] > 0
-
-        mask[ACTIONS["EAT"]] = agent.inventory["food"] > 0
 
         mask[ACTIONS["FORK"]] = len(team_agents) < self.max_team_size
 
@@ -135,9 +132,8 @@ class ZappyEnv:
         action 3 to 4 is turn 0 left, 1 right
         action 5 to 11 is get a ressoure (in order of TILE_SPAWN_DENSITY keys)
         action 12 to 18 is drop a ressoure (in order of TILE_SPAWN_DENSITY keys)
-        action 19 is eating
-        action 20 is giving birth
-        action 21 is broadcasting
+        action 19 is giving birth
+        action 20 and 21 is broadcasting
         """
         tile = self.map[agent.coordinates[0] + agent.coordinates[1] * self.map_size[0]]
 
@@ -190,9 +186,6 @@ class ZappyEnv:
             self.metrics.useful_drops += 1
         else:
             self.metrics.useless_drops += 1
-
-    def _eat(self, agent, team_agents, other_team, tile, action):
-        agent.eat()
     
     def _fork(self, agent, team_agents, other_team, tile, action):
         team_agents.append(Agent(brain=agent.brain.fork(self.fork_mutation_std),
